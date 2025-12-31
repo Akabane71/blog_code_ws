@@ -8,5 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+data/*.txt
 tmp/*.json
-tmp/*.faiss
+data/*.md

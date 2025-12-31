@@ -1,0 +1,10 @@
+[project]
+name = "gal-camera"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "jieba>=0.42.1",
+    "rapidfuzz>=3.6.1",
+]

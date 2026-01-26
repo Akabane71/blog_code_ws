@@ -1,7 +1,7 @@
 # 总需求
 给我写一个python CLI 程序，实现一个本地的模糊文档查询,
-使用 opensearch 将 大量的.md文件做成数据【我hexo写的笔记】
-使用 opensearch 来增删改查，查询数据
+使用 opensearch 将 大量的.md文件做成数据
+使用 opensearch 查询数据
 
 # 项目目录要求如下：
 data/

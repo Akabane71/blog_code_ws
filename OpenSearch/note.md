@@ -5,8 +5,6 @@ https://docs.opensearch.org/latest/install-and-configure/install-opensearch/dock
 
 
 # 上传文档
-使用接口
-
 
 
 # 查询文档

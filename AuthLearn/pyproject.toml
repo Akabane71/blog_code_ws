@@ -1,0 +1,18 @@
+[project]
+name = "authlearn"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "python-multipart",
+    "jinja2",
+    "itsdangerous",
+    "passlib[bcrypt]",
+    "bcrypt<4", # pin to avoid passlib incompatibility with bcrypt 4.x on Windows
+    "python-jose[cryptography]",
+    "authlib",
+    "httpx>=0.28.1",
+]

@@ -55,6 +55,11 @@ async def index():
 </html>
 """
 
+@app.get("/logout")
+async def logout(request: Request):
+    request.session.clear()
+    return RedirectResponse(url='/')
+
 
 @app.get("/login")
 async def login(request: Request):
@@ -71,12 +76,36 @@ async def auth_callback(request: Request):
         raise HTTPException(status_code=400, detail=f"OAuth 错误: {e.error}")
     user = await oauth.github.get("user", token=token)
     profile = user.json()
-    print("登录用户资料：", profile)
-    html = f"""
-    <h3>登录成功</h3>
-    <p>GitHub 用户名：{profile.get('login')}</p>
-    <p>ID：{profile.get('id')}</p>
-    <p>Token（访问 GitHub API）：{token['access_token']}...</p>
-    <img src="{profile.get('avatar_url')}" width="100" />
-    """
-    return HTMLResponse(html)
+    # 将用户信息与 access_token 简单存入 session，用于受保护页面
+    request.session["user"] = {
+        "login": profile.get("login"),
+        "id": profile.get("id"),
+        "avatar_url": profile.get("avatar_url"),
+        "access_token": token["access_token"],
+    }
+    return RedirectResponse(url="/protected")
+
+
+def current_user(request: Request):
+    return request.session.get("user")
+
+
+@app.get("/protected", response_class=HTMLResponse)
+async def protected_page(request: Request):
+    user = current_user(request)
+    if not user:
+        return RedirectResponse(url="/login")
+    masked = (user.get("access_token") or "")[:6] + "..."
+    return f"""
+<!doctype html>
+<html lang="zh">
+<head><meta charset="utf-8"><title>Protected</title></head>
+<body>
+  <h3>受保护页面（需 SSO 登录）</h3>
+  <p>GitHub 用户名：{user.get('login')} (id: {user.get('id')})</p>
+  <p>Access Token（截断）：{masked}</p>
+  <p><img src="{user.get('avatar_url')}" width="100" /></p>
+  <p><a href="/">首页</a> | <a href="/logout">退出</a></p>
+</body>
+</html>
+"""

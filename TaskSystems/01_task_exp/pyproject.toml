@@ -1,0 +1,11 @@
+[project]
+name = "01-task-exp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.128.0",
+    "redis>=7.1.0",
+    "sqlalchemy>=2.0.46",
+]

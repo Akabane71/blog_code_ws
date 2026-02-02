@@ -98,6 +98,8 @@ def get_events(task_id: str, limit: int = 100):
     finally:
         db.close()
 
+
+
 @router.post("/tasks/{task_id}/cancel")
 def cancel(task_id: str):
     db: Session = SessionLocal()

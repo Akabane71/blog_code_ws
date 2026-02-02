@@ -41,3 +41,25 @@ get
 /tasks/{task_id}/cancel
 
 
+# mermaid图
+> 消息队列
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING
+
+    PENDING --> QUEUED : enqueue
+
+    QUEUED --> RECEIVED : worker fetch
+
+    RECEIVED --> RUNNING : execute
+
+    RUNNING --> SUCCESS : completed
+    SUCCESS --> DONE : persist result
+
+    RUNNING --> FAILED : error
+
+    FAILED --> RETRYING : backoff retry
+    RETRYING --> QUEUED : publish again
+
+    FAILED --> DEAD : max retries reached
+```
